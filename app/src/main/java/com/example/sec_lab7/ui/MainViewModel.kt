@@ -34,12 +34,13 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun removeSteps(healthConnectClient: HealthConnectClient, startTime: Instant, endTime: Instant) {
+    fun removeSteps(healthConnectClient: HealthConnectClient, id: String) {
         viewModelScope.launch {
             try {
                 healthConnectClient.deleteRecords(
                     StepsRecord::class,
-                    timeRangeFilter = TimeRangeFilter.between(startTime, endTime)
+                    listOf(id),
+                    emptyList()
                 )
             } catch (e: Exception) {
                 // Run error handling here

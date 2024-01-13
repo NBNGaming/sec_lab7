@@ -10,6 +10,8 @@ import androidx.health.connect.client.HealthConnectClient
 import com.example.sec_lab7.R
 import androidx.health.connect.client.records.StepsRecord
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class MyAdapter(
     private val context: Context,
@@ -32,14 +34,17 @@ class MyAdapter(
     }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
+        val item = arrayList[position]
+        val startTime = ZonedDateTime.ofInstant(item.startTime, item.startZoneOffset)
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
+
         val convertViewCopy = LayoutInflater.from(context).inflate(R.layout.row, parent, false)
         convertViewCopy.findViewById<TextView>(R.id.fromTime).text =
-            arrayList[position].startTime.toString()
+            formatter.format(startTime)
         convertViewCopy.findViewById<TextView>(R.id.countSteps).text =
-            arrayList[position].count.toString()
+            item.count.toString()
         convertViewCopy.findViewById<FloatingActionButton>(R.id.btnRemove).setOnClickListener {
-            val steps = arrayList[position]
-            viewModel.removeSteps(healthConnectClient, steps.startTime.minusMillis(1), steps.endTime.plusMillis(1))
+            viewModel.removeSteps(healthConnectClient, item.metadata.id)
             mainFragment.updateUI()
         }
 

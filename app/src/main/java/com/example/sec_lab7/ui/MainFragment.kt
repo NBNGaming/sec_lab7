@@ -150,13 +150,13 @@ class MainFragment : Fragment(), DatePickerDialog.OnDateSetListener, TimePickerD
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        val localDateTime = LocalDateTime.of(myYear, myMonth, myDay, hourOfDay, 0, 0)
+        val localDateTime = LocalDateTime.of(myYear, myMonth, myDay, hourOfDay, minute)
         myDateTime = localDateTime.atZone(myDateTime.zone)
         updateUI()
     }
 
     fun updateUI() {
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
+        val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")
         var title = formatter.format(myDateTime)
         if (myStepsCount != null) {
             title += " — $myStepsCount steps"

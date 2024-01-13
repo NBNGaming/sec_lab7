@@ -3,5 +3,6 @@
     <style name="Base.Theme.Sec_lab7" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 </resources>
